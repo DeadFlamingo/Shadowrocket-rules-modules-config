@@ -1,0 +1,32 @@
+#!name=YouTube Remove Ads Background Playback 
+#!desc=(IOS >= 15) YouTube Remove Ads Background Playback PIP
+
+# Delete waterfall streams, videos, ads and Shorts that appear in searches
+# Delete video ads in Shorts
+# Delete the upload button at the bottom
+# Add picture-in-picture (PIP), background playback (Beta)
+# > Note
+# There will be omissions in advertising information, and advertisements may appear occasionally
+# This module is comprehensive enough, there is no need to mix other rules to prevent rewriting rules from being broken
+#Clients that do not support Mock can use reject-200/reject-img instead
+# > Credit 
+# @Choler & @DivineEngine & @app2smile
+# @DeadFlamingo (combines with other methods)
+
+[URL Rewrite]
+(^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 302
+^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad - reject
+
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v\d\/player\/ad_break - reject
+^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads - reject
+^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) - reject
+^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext - reject
+^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
+
+
+[Script]
+
+youtube = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting)\?,requires-body=1,binary-body-mode=1,max-size=3145728,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.js
+
+[MITM]
+hostname = %APPEND% -redirector*.googlevideo.com,*.googlevideo.com,www.youtube.com,s.youtube.com,youtubei.googleapis.com

@@ -1,0 +1,15 @@
+#!name=Anti Revoke IPA’s
+#!desc=No More Annoing Mesages Anti Revoke IPA’s 
+#!openUrl=https://github.com/Semporia/TikTok-Unlock
+#!author=Semporia
+#!homepage=https://github.com/Semporia/TikTok-Unlock
+#!icon= https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/TikTok.png
+
+[URL Rewrite]
+//Anti Revoke IPA’s
+https://ppq.apple.com/.+/authorization https://dl.dropboxusercontent.com/s/oopmg6wybca8eyj/anti-revoke 302
+(ocsp.+)/(ocsp.+wwdrg.+) _ REJECT
+^https?:\/\/(\w+\.)?(adclick|ads([0-9]+)?|adx|adserver|adformat|analysis|analytics|banners?|click|counter|delivery|log|log-?\w+?|pagead|stat|stats|statis|trace|track|tracking|uniad)\.\w+\.(com|cn|org|info|io|net|vn|com.vn) reject 
+
+[MITM]
+hostname = %APPEND% ppq.apple.com,ocsp*.apple.com
